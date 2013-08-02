@@ -15,7 +15,7 @@ if len(sys.argv) == 1:
 
     movie = raw_input('Enter a movie title:')
     date = raw_input('Enter a date d/m/y:')
-    rate = raw_input('Please enter a number 1-10':)
+    rate = raw_input('Please enter a number 1-10:')
     # For an IF statement to run indentation matters.
 
 else:
