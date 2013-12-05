@@ -3,10 +3,11 @@ import sqlite3
 import datetime
 
 
+
 createDb = sqlite3.connect('moviedb.db')
 conn = sqlite3.connect('moviedb.db')
 c = conn.cursor()
-
+c.execute("DROP TABLE IF EXISTS myMovies")
 c.execute('''create table myMovies
 (movie text, date text, rating text)''')
 
