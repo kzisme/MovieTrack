@@ -22,6 +22,7 @@ if len(sys.argv) == 1:
     rating = raw_input('Please enter a number 1-10:')
     # For an IF statement to run indentation matters.
 #Here is a comment to test commit
+#Here is a commit test
 else:
     print "We are in the command line mode."
     #TODO:All of the code here to parse the arguments.
