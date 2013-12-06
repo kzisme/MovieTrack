@@ -21,7 +21,7 @@ if len(sys.argv) == 1:
     date = raw_input('Enter a date d/m/y:')
     rating = raw_input('Please enter a number 1-10:')
     # For an IF statement to run indentation matters.
-
+#Here is a comment to test commit
 else:
     print "We are in the command line mode."
     #TODO:All of the code here to parse the arguments.
