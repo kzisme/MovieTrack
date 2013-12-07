@@ -19,6 +19,16 @@ def add_to_db(movie,day,rating):
 		(movie, day, rating))
 	conn.commit()
 
+def view_entries():
+	conn = sqlite3.connect('moviedb.db')
+	c = conn.cursor()
+	c.execute("SELECT * FROM myMovies")
+
+	rows = c.fetchall()
+	for row in rows:
+		print row
+	print("Here are your previously viewed movies!")
+
 continue_game = True
 while continue_game:
 	print("""
@@ -26,19 +36,17 @@ while continue_game:
 		2. Delete a movie.
 		3. View entries.
         """)
-	option = raw_input("Please select an option:")
+	option = raw_input("Please select an option:",)
 	if option == "1":
 		movie = raw_input('Enter a movie title:')
 		day = raw_input('Enter a date d/m/y:')
 		rating = raw_input('Please enter a number 1-10:')
 		add_to_db(movie,day,rating)
-		print("Your movie has been added")
+		print("Your movie has been added",)
 	elif option == "2":
-		print("Your movie has been deleted.")
+		print("Your movie has been deleted.",)
 	elif option == "3":
-		rows = c.fetchall()
-		for row in rows:
-			print row
+		view_entries()
 	elif option == "":
 		sys.exit(0)
 
