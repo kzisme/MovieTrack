@@ -29,11 +29,18 @@ def view_entries():
 		print row
 	print("Here are your previously viewed movies!")
 
+def delete_entry():
+	conn = sqlite3.connect('moviedb')
+	c = conn.cursor()
+	c.execute("DELETE FROM myMovies WHERE movie == movie")
+
+if __name__ == "__main__":
+
 continue_game = True
 while continue_game:
 	print("""
 		1. Add a movie.
-		2. Delete a movie.
+		2. Delete all movies.
 		3. View entries.
         """)
 	option = raw_input("Please select an option:",)
