@@ -27,7 +27,6 @@ def delete_entry():
 	c.execute("DELETE FROM myMovies WHERE movie == movie")
 
 if __name__ == "__main__":
-
 	continue_game = True
 	while continue_game:
 		print("""
@@ -48,7 +47,6 @@ if __name__ == "__main__":
 			view_entries()
 		elif option == "":
 			sys.exit(0)
-
 conn.commit()
 conn.close()
 
