@@ -23,18 +23,19 @@ def view_entries():
 		print row
 	print("Here are your previously viewed movies!")
 
-def delete_entry():
-	c.execute("DELETE FROM myMovies WHERE movie == movie")
+def delete_movie(movie):
+   c.execute("DELETE FROM myMovies WHERE movie == ?", (movie,))
+   conn.commit()
 
 if __name__ == "__main__":
 	continue_game = True
 	while continue_game:
 		print("""
 			1. Add a movie.
-			2. Delete all movies.
+			2. Delete a movie.
 			3. View entries.
         	""")
-		option = raw_input("Please select an option:",)
+		option = raw_input("Please select an option:")
 		if option == "1":
 			movie = raw_input('Enter a movie title:')
 			day = raw_input('Enter a date d/m/y:')
@@ -42,11 +43,12 @@ if __name__ == "__main__":
 			add_to_db(movie,day,rating)
 			print("Your movie has been added",)
 		elif option == "2":
+			movie = raw_input("Please type a movie that you want deleted:",)
+			delete_movie(movie)
 			print("Your movie has been deleted.",)
 		elif option == "3":
 			view_entries()
 		elif option == "":
 			sys.exit(0)
-conn.commit()
 conn.close()
 
