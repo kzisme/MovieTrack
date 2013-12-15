@@ -5,28 +5,6 @@ import datetime
 conn = sqlite3.connect('moviedb.db')
 c = conn.cursor()
 
-def connect_to_db():
-	c.execute('''CREATE TABLE IF NOT EXISTS myMovies
-		movie text, day text, rating integer)''')
-	return conn
-
-def add_to_db(movie,day,rating):
-	c.execute("insert into myMovies (movie, day, rating) values (?, ?, ?)",
-		(movie, day, rating))
-	conn.commit()
-
-def view_entries():
-	c.execute("SELECT * FROM myMovies")
-
-	rows = c.fetchall()
-	for row in rows:
-		print row
-	print("Here are your previously viewed movies!")
-
-def delete_movie(movie):
-   c.execute("DELETE FROM myMovies WHERE movie == ?", (movie,))
-   conn.commit()
-
 class Movie(object):
     def __init__(self, db, name):
         self.db = db
@@ -50,7 +28,7 @@ class Movie(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def create(self):
+    def self.create(self):
         self.db.c.execute("INSERT INTO movies VALUES (?)", (self.name))
 
 class Actor(object):
@@ -71,7 +49,7 @@ class Actor(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def add_to_db(self):
+    def self.add_to_db(self):
         self.db.c.execute("INSERT INTO actors VALUES (?)", (self.name,))
 
 def Rating(object):
@@ -82,7 +60,7 @@ def Rating(object):
         if not self.in_db():
             self.add_to_db()
 
-    def delete(self):
+    def delete(self)
         self.db.c.execute("DELETE FROM ratings WHERE username == ?", (self.user.name,))
         self.db.conn.commit()
 
@@ -94,10 +72,10 @@ def Rating(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def add_to_db(self):
+    def self.add_to_db(self):
         self.db.c.execute("INSERT INTO ratings VALUES (?)", (self.user.name,))  # I'm not sure if this syntax is right; I just tried it. No guarantees.
 
-    def get_all_by_user(self):
+    def self.get_all_by_user(self):
         self.db.c.execute("SELECT movie, date, rating FROM ratings WHERE username == ?", (self.user.name,))
         return self.db.c.fetchall()
 
