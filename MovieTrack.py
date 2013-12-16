@@ -28,7 +28,7 @@ class Movie(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def self.create(self):
+    def create(self):
         self.db.c.execute("INSERT INTO movies VALUES (?)", (self.name))
 
 class Actor(object):
@@ -49,7 +49,7 @@ class Actor(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def self.add_to_db(self):
+    def add_to_db(self):
         self.db.c.execute("INSERT INTO actors VALUES (?)", (self.name,))
 
 def Rating(object):
@@ -60,7 +60,7 @@ def Rating(object):
         if not self.in_db():
             self.add_to_db()
 
-    def delete(self)
+    def delete(self):
         self.db.c.execute("DELETE FROM ratings WHERE username == ?", (self.user.name,))
         self.db.conn.commit()
 
@@ -72,29 +72,37 @@ def Rating(object):
         except DBError:  # I have no idea what this would be in SQLite3
             return False
 
-    def self.add_to_db(self):
+    def add_to_db(self):
         self.db.c.execute("INSERT INTO ratings VALUES (?)", (self.user.name,))  # I'm not sure if this syntax is right; I just tried it. No guarantees.
 
-    def self.get_all_by_user(self):
+    def get_all_by_user(self):
         self.db.c.execute("SELECT movie, date, rating FROM ratings WHERE username == ?", (self.user.name,))
         return self.db.c.fetchall()
 
 class User(object):
     def __init__(self, db, username, password):
         self.db = db
-        self.name = username
+        self.username = username
         self.password = password
         self.movies_viewed = self.get_viewed_movies()
 
     def get_viewed_movies(self):
-        self.c.execute("SELECT movie, date, rating FROM viewed_movies WHERE (username = %s)", self.username)
-        return {"movie":movie,"date":date, "rating":rating for movie, date, rating in self.c.fetchall()}
+        self.db.c.execute("SELECT movie, date, rating FROM viewed_movies WHERE username='%s'" % self.username)
+        row = c.fetchone()
+        if row is not None:
+        	movie = row[0]
+        	if move is not None:
+        		date = row[1]
+        		if date is not None:
+					rating = row[3]
+					if rating is not None:
+        					return dict(("movie",movie),("date", date), ("rating", rating))
 
 
 class Database(object):
     def __init__(self, file):
         self.db = sqlite3.connect(file)
-        self.c = db.cursor()
+        self.c = self.db.cursor()
         self.c.execute('''CREATE TABLE IF NOT EXISTS movies
                 (movie text)''')
         self.c.execute('''CREATE TABLE IF NOT EXISTS users
@@ -108,7 +116,7 @@ class Database(object):
 if __name__ == "__main__":
     db = Database("moviedb_dev.db")
     u = raw_input("Username: ")
-    p = raw_inpit("Password: ")
+    p = raw_input("Password: ")
     user = User(db, u, p)  # So we have the user object. Now we want to get the current movies from it right away to save calls later.  Or maybe not, let's save it.
     while True:
         print("""
@@ -138,7 +146,7 @@ if __name__ == "__main__":
             movie_name = raw_input("Movie name?")
             try:
                 movie = Movie(db, movie_name)
-                r = raw_input("Rating? (1-5)")
+                r = raw_input("Rating? (1-10)")
                 rating = Rating(db, r, movie, user)
             except:
                 print "I didn't handle this properly, I'm still on my bender and I bought a house; give me a break."
