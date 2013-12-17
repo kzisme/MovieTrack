@@ -25,9 +25,9 @@ class Movie(object):
     def in_db(self):
         self.db.c.execute("SELECT * FROM movies WHERE movie == ?", (self.name,))
         try:
-            self.db.fetchone()
+            self.db.c.fetchone()
             return True
-        except DBError:  # I have no idea what this would be in SQLite3
+        except sqlite3.DatabaseError:
             return False
 
     def create(self):
@@ -46,9 +46,9 @@ class Actor(object):
     def in_db(self):
         self.db.c.execute("SELECT * FROM actors WHERE actor == ?", (self.name,))
         try:
-            self.db.fetchone()
+            self.db.c.fetchone()
             return True
-        except DBError:  # I have no idea what this would be in SQLite3
+        except sqlite3.DatabaseError:
             return False
 
     def add_to_db(self):
@@ -71,7 +71,7 @@ def Rating(object):
         try:
             self.db.fetchone()
             return True
-        except DBError:  # I have no idea what this would be in SQLite3
+        except sqlite3.DatabaseError:
             return False
 
     def add_to_db(self):
@@ -91,14 +91,11 @@ class User(object):
     def get_viewed_movies(self):
         self.db.c.execute("SELECT movie, date, rating FROM viewed_movies WHERE username='%s'" % self.username)
         row = c.fetchone()
-        if row is not None:
-        	movie = row[0]
-        	if move is not None:
-        		date = row[1]
-        		if date is not None:
-					rating = row[3]
-					if rating is not None:
-        					return dict(("movie",movie),("date", date), ("rating", rating))
+        row = (1, 2, 3) # replace with db fetch
+        if None in row:
+             return None
+        return dict(zip(('movie', 'date', 'rating'), row))
+
 
 
 class Database(object):
