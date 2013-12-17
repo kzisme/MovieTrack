@@ -2,7 +2,7 @@ import sys
 import sqlite3
 import datetime
 #TO-DO:
-#Fix a few user options...I think like 1-3 or something.
+#Fix a few user options...I think like Options 3-5 or something.
 #
 conn = sqlite3.connect('moviedb.db')
 c = conn.cursor()
@@ -13,14 +13,13 @@ class Movie(object):
         self.name = name.lower()
         if not self.in_db():
             self.create()
-
-    @property
+	@property
     def all(self):
         return self.db.c.execute("SELECT * FROM movies")
 
     def delete(self):
         self.db.c.execute("DELETE FROM movies WHERE movie == ?", (self.name,))
-        self.db.conn.commit()
+        conn.commit()
 
     def in_db(self):
         self.db.c.execute("SELECT * FROM movies WHERE movie == ?", (self.name,))
@@ -129,13 +128,16 @@ if __name__ == "__main__":
         option = raw_input("Please select an option:")
         if option == "1":
             movie_name = raw_input('Enter a movie title:')
-            movie = Movie(db, movie_name)  # So because of how we set up the object, if it's not in the DB it will be created automatically. If it is, nothing changes atm, but there's room for improvement.
-            # day = raw_input('Enter a date d/m/y:')
-            # rating = raw_input('Please enter a number 1-10:')  # We're going to ignore this for the time being, easy to add back in. Barebones with OOP.
+            movie = Movie(db, movie_name, create = True)
             print("Your movie has been added",)
         elif option == "2":
-            movie = raw_input("Please type a movie that you want deleted:",)
-            movie.delete()
+            to_delete = raw_input("Please type a movie that you want deleted:",)
+            movie= Movie(db, to_delete)
+            if movie is None:
+                print("That movie is not in database")
+            else:
+                movie.delete()
+                print("Movie {} has been deleted".format(to_delete))
             print("Your movie has been deleted.",)
         elif option == "3":
             print user.get_viewed_movies()
