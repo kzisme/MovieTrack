@@ -8,21 +8,24 @@ conn = sqlite3.connect('moviedb.db')
 c = conn.cursor()
 
 class Movie(object):
-    def __init__(self, db, name):
+    def __init__(self, db, name, create):
         self.db = db
-        self.name = name.lower()
+        self.name = name.lower() #Not sure if I should always format to lower case.
+        self.day = day
+        self.rating = rating
         if not self.in_db():
             self.create()
+        create = False
 	@property
-    def all(self):
-        return self.db.c.execute("SELECT * FROM movies")
+   	def all(self):
+        	return self.db.c.execute("SELECT * FROM myMovies")
 
     def delete(self):
-        self.db.c.execute("DELETE FROM movies WHERE movie == ?", (self.name,))
+        self.db.c.execute("DELETE FROM myMovies WHERE movie == ?", (self.name,))
         conn.commit()
 
     def in_db(self):
-        self.db.c.execute("SELECT * FROM movies WHERE movie == ?", (self.name,))
+        self.db.c.execute("SELECT * FROM myMovies WHERE movie == ?", (self.name,))
         try:
             self.db.c.fetchone()
             return True
@@ -30,13 +33,16 @@ class Movie(object):
             return False
 
     def create(self):
-        self.db.c.execute("INSERT INTO movies VALUES (?)", (self.name))
+        self.db.c.execute("INSERT INTO myMovies (movie, day, rating) VALUES (?, ?, ?) ", (self.name, self.day, self.rating))
+        conn.commit()
 
 class Actor(object):
     def __init__(self):
         self.name = name
         if not self.in_db():
             self.add_to_db()
+        self.db.close()
+        print self.name
 
     def delete(self):
         self.db.c.execute("DELETE FROM actors WHERE actor == ?", (self.name,))
@@ -112,7 +118,7 @@ class Database(object):
         self.db.commit()  # When the program closes, shit gonna commit.
 
 if __name__ == "__main__":
-    db = Database("moviedb_dev.db")
+    db = Database("moviedb.db")
     u = raw_input("Username: ")
     p = raw_input("Password: ")
     user = User(db, u, p)  # So we have the user object. Now we want to get the current movies from it right away to save calls later.  Or maybe not, let's save it.
@@ -128,11 +134,14 @@ if __name__ == "__main__":
         option = raw_input("Please select an option:")
         if option == "1":
             movie_name = raw_input('Enter a movie title:')
+            day = raw_input('Enter the date you viewed the movie:')
+            rating = raw_input('Please enter a rating for you movie 1-10:')
             movie = Movie(db, movie_name, create = True)
+            movie.create()
             print("Your movie has been added",)
         elif option == "2":
             to_delete = raw_input("Please type a movie that you want deleted:",)
-            movie= Movie(db, to_delete)
+            movie = Movie(db, to_delete)
             if movie is None:
                 print("That movie is not in database")
             else:
@@ -142,7 +151,7 @@ if __name__ == "__main__":
         elif option == "3":
             print user.get_viewed_movies()
         elif option == "4":
-            print user.get_all_movies()
+            print user.movies_viewed
         elif option == "5":
             movie_name = raw_input("Movie name?")
             try:
