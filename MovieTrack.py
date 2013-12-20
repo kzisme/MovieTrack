@@ -141,7 +141,9 @@ if __name__ == "__main__":
             print("Your movie has been added",)
         elif option == "2":
             to_delete = raw_input("Please type a movie that you want deleted:",)
-            movie = Movie(db, to_delete)
+            day = "" #There is probably a better way to do this...change it later
+            rating = "" #There is probably a better way to do this...change it later
+            movie = Movie(db, to_delete, create = True)
             if movie is None:
                 print("That movie is not in database")
             else:
