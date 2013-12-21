@@ -1,9 +1,7 @@
 import sys
 import sqlite3
 import datetime
-#TO-DO:
-#Fix a few user options...I think like Options 3-5 or something.
-#
+
 conn = sqlite3.connect('moviedb.db')
 c = conn.cursor()
 
