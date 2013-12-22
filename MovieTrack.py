@@ -14,9 +14,9 @@ class Movie(object):
         if not self.in_db():
             self.create()
         create = False
-        @property
-        def all(self):
-                return self.db.c.execute("SELECT * FROM myMovies")
+    @property
+    def all(self):
+            return self.db.c.execute("SELECT * FROM myMovies")
 
     def delete(self):
         self.db.c.execute("DELETE FROM myMovies WHERE movie == ?", (self.name,))
@@ -119,16 +119,14 @@ if __name__ == "__main__":
     db = Database("moviedb.db")
     u = raw_input("Username: ")
     p = raw_input("Password: ")
-    user = User(db, u, p)  # So we have the user object. Now we want to get the current movies from it right away to save calls later.  Or maybe not, let's save it.
+    user = User(db, u, p)
     while True:
         print("""
                 1. Add a movie.
                 2. Delete a movie.
-                3. View your ratings.
-                4. View all movies.
+                3. View all movies.
                 5. Rate a movie.
-
-        """)
+        	""")
         option = raw_input("Please select an option:")
         if option == "1":
             movie_name = raw_input('Enter a movie title:')
