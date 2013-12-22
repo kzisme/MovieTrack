@@ -14,9 +14,9 @@ class Movie(object):
         if not self.in_db():
             self.create()
         create = False
-	@property
-   	def all(self):
-        	return self.db.c.execute("SELECT * FROM myMovies")
+        @property
+        def all(self):
+                return self.db.c.execute("SELECT * FROM myMovies")
 
     def delete(self):
         self.db.c.execute("DELETE FROM myMovies WHERE movie == ?", (self.name,))
@@ -105,8 +105,8 @@ class Database(object):
     def __init__(self, file):
         self.db = sqlite3.connect(file)
         self.c = self.db.cursor()
-        self.c.execute('''CREATE TABLE IF NOT EXISTS movies
-                (movie text)''')
+        self.c.execute('''CREATE table IF NOT EXISTS myMovies
+  				(movie text, day text, rating text)''')
         self.c.execute('''CREATE TABLE IF NOT EXISTS users
                 (username text, password text)''')
         self.c.execute('''CREATE TABLE IF NOT EXISTS viewed_movies
