@@ -11,9 +11,10 @@ class Movie(object):
         self.name = name.lower() #Not sure if I should always format to lower case.
         self.day = day
         self.rating = rating
-        if not self.in_db():
-            self.create()
-        create = False
+        if not self.in_db() and create:
+        	self.create()
+        else:
+        	return None
     @property
     def all(self):
             return self.db.c.execute("SELECT * FROM myMovies")
@@ -106,7 +107,7 @@ class Database(object):
         self.db = sqlite3.connect(file)
         self.c = self.db.cursor()
         self.c.execute('''CREATE table IF NOT EXISTS myMovies
-  				(movie text, day text, rating text)''')
+                                  (movie text, day text, rating text)''')
         self.c.execute('''CREATE TABLE IF NOT EXISTS users
                 (username text, password text)''')
         self.c.execute('''CREATE TABLE IF NOT EXISTS viewed_movies
@@ -126,7 +127,7 @@ if __name__ == "__main__":
                 2. Delete a movie.
                 3. View all movies.
                 5. Rate a movie.
-        	""")
+                """)
         option = raw_input("Please select an option:")
         if option == "1":
             movie_name = raw_input('Enter a movie title:')
