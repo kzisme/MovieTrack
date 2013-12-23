@@ -126,7 +126,6 @@ if __name__ == "__main__":
                 1. Add a movie.
                 2. Delete a movie.
                 3. View all movies.
-                5. Rate a movie.
                 """)
         option = raw_input("Please select an option:")
         if option == "1":
@@ -149,14 +148,14 @@ if __name__ == "__main__":
             print("Your movie has been deleted.",)
         elif option == "3":
             print user.get_viewed_movies()
-        elif option == "4":
-            print user.movies_viewed
-        elif option == "5":
-            movie_name = raw_input("Movie name?")
-            try:
-                movie = Movie(db, movie_name)
-                r = raw_input("Rating? (1-10)")
-                rating = Rating(db, r, movie, user)
-            except:
-                print "I didn't handle this properly, I'm still on my bender and I bought a house; give me a break."
-        sys.exit(0)
+        #elif option == "4":
+        #    print user.movies_viewed
+        #elif option == "5":
+        #    movie_name = raw_input("Movie name?")
+        #    try:
+        #        movie = Movie(db, movie_name)
+        #        r = raw_input("Rating? (1-10)")
+        #        rating = Rating(db, r, movie, user)
+        #    except:
+        #        print "I didn't handle this properly, I'm still on my bender and I bought a house; give me a break."
+        #sys.exit(0)
