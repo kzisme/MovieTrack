@@ -134,17 +134,17 @@ if __name__ == "__main__":
             rating = raw_input('Please enter a rating for you movie 1-10:')
             movie = Movie(db, movie_name, create = True)
             movie.create()
-            print("Your movie has been added",)
+            print("Your movie has been added!",)
         elif option == "2":
             to_delete = raw_input("Please type a movie that you want deleted:",)
             day = "" #There is probably a better way to do this...change it later
             rating = "" #There is probably a better way to do this...change it later
             movie = Movie(db, to_delete, create = True)
             if movie is None:
-                print("That movie is not in database")
+                print("That movie is not in database!")
             else:
                 movie.delete()
-                print("Movie {} has been deleted".format(to_delete))
+                print("Movie {} has been deleted.".format(to_delete))
             print("Your movie has been deleted.",)
         elif option == "3":
             print user.get_viewed_movies()
