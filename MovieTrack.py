@@ -100,8 +100,6 @@ class User(object):
              return None
         return dict(zip(('movie', 'date', 'rating'), row))
 
-
-
 class Database(object):
     def __init__(self, file):
         self.db = sqlite3.connect(file)
