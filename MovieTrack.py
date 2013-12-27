@@ -3,7 +3,7 @@ import sqlite3
 import datetime
 
 conn = sqlite3.connect('moviedb.db')
-c = conn.cursor()
+c = conn.cursor() #This is necessary
 
 class Movie(object):
     def __init__(self, db, name, create):
@@ -157,3 +157,4 @@ if __name__ == "__main__":
         #    except:
         #        print "I didn't handle this properly, I'm still on my bender and I bought a house; give me a break."
         #sys.exit(0)
+conn.close() #This needs to be somewhere, but system does not close with an empty string.
