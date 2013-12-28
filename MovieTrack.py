@@ -1,7 +1,10 @@
 import sys
 import sqlite3
 import datetime
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.parse_args()
 conn = sqlite3.connect('moviedb.db')
 c = conn.cursor() #This is necessary
 
